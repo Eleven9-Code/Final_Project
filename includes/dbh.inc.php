@@ -5,8 +5,9 @@ $dbUserName="root";
 $dbPassword="";
 $dbName="reservationSys";
 
-$conn= myspli_connect($serverName,$dbUserName,$dbPassword,$dbName);
+$conn = mysqli_connect($serverName,$dbUserName,$dbPassword,$dbName);
 
-if(!conn){
+if(!$conn){
     die("connection Failed: ". mysqli_connect_error());
+    echo "diesss";
 }
