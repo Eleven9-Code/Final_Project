@@ -20,14 +20,11 @@ if(isset($_POST["submit"])){
         header("location:../reserve.php?error=invalidemail");
         exit();
     }
-    if(unavailableTime($conn,$reserveTime) !== false){
+    if(unavailable($conn,$reserveTime) !== false){
         header("location:../reserve.php?error=timeunavailable");
         exit();
     }
-    if(unavailableTable($numGuest) !== false){
-        header("location:../reserve.php?error=tableunavailable");
-        exit();
-    }
+    
     createReservation($conn,$userFName,$userEmail,$userPhone,$reserveTime,$numGuest);
 
 }
