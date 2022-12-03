@@ -143,7 +143,13 @@ function createReservation($conn,$reservedTableID,$reservedTableSize,$reserveTim
     $sql="INSERT INTO reservedtables(tableID,tableSize,tableTime,tableClass,userFName,userPhone,numGuest,cc)
      VALUES(?,?,?,?,?,?,?,?)"; 
     //$reservedTableID,$reservedTableSize,$reserveTime,$userFName,$userEmail,$userPhone,$numGuest
-    
+    $CHEK=TrafficController($conn);
+    if($CHEK==true){
+        if(empty($CCinfo)){
+            header("location:../reserve.php?error=CCFA");
+            exit();
+        }
+    }
         $stmt=mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt,$sql)){
         header("location:../reserve.php?error=stmtfailed");
@@ -537,7 +543,7 @@ function BreakDownNumGuest($conn,$reserveTime,$numGuest,$userFName,$userPhone,$C
     if($extraGroup!=0){
         unavailable($conn,$reserveTime,$extraGroup,$userFName,$userPhone,$CCinfo);
     }
-    exit();
+    return $result=true;
 }
 
 function TrafficController($conn){
@@ -549,7 +555,7 @@ function TrafficController($conn){
        while($row=mysqli_fetch_assoc($resultsData)){
         $total=$total+$row["numGuest"];
        }
-        if($total>40){
+        if($total>15){
             return true;
         }
         else{

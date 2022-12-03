@@ -1,5 +1,5 @@
 <?php
-
+$hide="hide";
 if(isset($_POST["submit"])){
     $userFName=$_POST['userFName'];
     $userEmail=$_POST['userEmail'];
@@ -23,19 +23,18 @@ if(isset($_POST["submit"])){
     if(TrafficController($conn)==true){
         $hide="";
     }
-    else{
-        $hide="";
-    }
     //if a function returns true then you should check if the unavailable function is true 
     // this function should take 
     if(unavailable($conn,$reserveTime,$numGuest,$userFName,$userPhone,$CCinfo) == false){
         header("location:../reserve.php?error=timeunavailable");
         exit();
     }
-    else{
-        echo '<script>alert("Welcome to Geeks for Geeks")</script>';
-
+    if (BreakDownNumGuest($conn,$reserveTime,$numGuest,$userFName,$userPhone,$CCinfo) == false){
+        header("location:../reserve.php?error==CouldntGetT");
+        exit();
     }
+    
+        echo '<script>alert("Welcome to Geeks for Geeks")</script>';
     
         
  }
